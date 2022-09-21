@@ -86,7 +86,7 @@ class GameFragment : Fragment() {
     }
 
     // Untuk membuat function yang bernama showFinalScoreDialog()
-    // Untuk membuat dan menunjukkan dialog alert atau pop up dengan skor akhirnya.
+    // Untuk membuat dan menunjukkan dialog alert atau pop up dengan skor akhirnya
     private fun showFinalScoreDialog() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(R.string.congratulations))
