@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 // ViewModel yang berisi data aplikasi dan metode untuk memproses data
 class GameViewModel : ViewModel(){
 
-    // Mendeklarasikan variabel yang dapat diubah yang hanya dapat dimodifikasi di dalam kelas dideklarasikan.
+    // Mendeklarasikan variabel yang dapat diubah yang hanya dapat dimodifikasi di dalam kelas dideklarasikan
     // Untuk mendapatkan skor
     private var _score = 0
     val score: Int
@@ -68,7 +68,7 @@ class GameViewModel : ViewModel(){
         _score += SCORE_INCREASE
     }
 
-    // Untuk mengembalikan nilai true jika kata yang dituliskan pemain benar.
+    // Untuk mengembalikan nilai true jika kata yang dituliskan pemain benar
     // Untuk meningkatkan skor yang sesuai
     fun isUserWordCorrect(playerWord: String): Boolean {
         if (playerWord.equals(currentWord, true)) {
