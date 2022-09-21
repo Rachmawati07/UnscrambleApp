@@ -11,23 +11,22 @@ import com.rachma.unscrambleapp.databinding.GameFragmentBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 // Untuk mendeklarasikan class GameFragment dan function Fragment()
-// Merupakan tempat permainan dimainkan dan berisi logika
+// Merupakan tempat dimana permainan dimainkan dan berisi logika
 class GameFragment : Fragment() {
 
+    // Untuk membuat instance objek GameViewModel di dalam pengontrol UI yang sesuai
     private val viewModel: GameViewModel by viewModels()
 
-    // Binding object instance with access to the views in the game_fragment.xml layout
+    // Untuk mengikat instance objek dengan akses ke tampilan di layout game_fragment.xml
     private lateinit var binding: GameFragmentBinding
 
-    // Create a ViewModel the first time the fragment is created.
-    // If the fragment is re-created, it receives the same GameViewModel instance created by the
-    // first fragment
-
+    // Untuk membuat ViewModel saat pertama kali fragmen dibuat dan ketika fragmen dibuat ulang, maka akan menerima instance GameViewModel yang sama yang dibuat oleh fragmen pertama
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout XML file and return a binding object instance
+
+        // Untuk mengikat layout GameFragmant dan mengembalikan data binding
         binding = GameFragmentBinding.inflate(inflater, container, false)
         Log.d("GameFragment", "GameFragment created/re-created!")
         Log.d("GameFragment", "Word: ${viewModel.currentScrambledWord} " +
@@ -38,21 +37,19 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Setup a click listener for the Submit and Skip buttons.
+        // Untuk menyiapkan klik listener untuk tombol submit dan skip
         binding.submit.setOnClickListener { onSubmitWord() }
         binding.skip.setOnClickListener { onSkipWord() }
-        // Update the UI
+        // Untuk memperbarui kata yang ada pada tampilan
         updateNextWordOnScreen()
         binding.score.text = getString(R.string.score, 0)
         binding.wordCount.text = getString(
             R.string.word_count, 0, MAX_NO_OF_WORDS)
     }
 
-    /*
-    * Checks the user's word, and updates the score accordingly.
-    * Displays the next scrambled word.
-    * After the last word, the user is shown a Dialog with the final score.
-    */
+    // Untuk mendeklarasikan function onSubmitWord()
+    // Untuk memeriksa kata pengguna, dan memperbarui skor yang sesuai dengan hasilnya
+    // Untuk menampilkan kata acak selanjutnya
     private fun onSubmitWord() {
         val playerWord = binding.textInputEditText.text.toString()
 
@@ -68,9 +65,9 @@ class GameFragment : Fragment() {
         }
     }
 
-    /*
-    * Skips the current word without changing the score.
-    */
+    // Untuk mendeklarasikan function onSkipWord()
+    // Untuk melewati kata yang tampil sekarang tanpa mengubah skor
+    // Untuk memperbarui jumlah kata yang akan ditampilkan selanjutnya
     private fun onSkipWord() {
         if (viewModel.nextWord()) {
             setErrorTextField(false)
@@ -80,18 +77,16 @@ class GameFragment : Fragment() {
         }
     }
 
-    /*
-     * Gets a random word for the list of words and shuffles the letters in it.
-     */
+    // Untuk mendeklarasikan function getNextScrambleWord()
+    // Untuk mendapatkan kata acak untuk daftar kata dan mengacak huruf di dalamnya untuk ditampilkan kembali
     private fun getNextScrambledWord(): String {
         val tempWord = allWordsList.random().toCharArray()
         tempWord.shuffle()
         return String(tempWord)
     }
 
-    /*
-    * Creates and shows an AlertDialog with the final score.
-    */
+    // Untuk membuat function yang bernama showFinalScoreDialog()
+    // Untuk membuat dan menunjukkan dialog alert atau pop up dengan skor akhirnya.
     private fun showFinalScoreDialog() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(R.string.congratulations))
@@ -106,19 +101,17 @@ class GameFragment : Fragment() {
             .show()
     }
 
-    /*
-     * Re-initializes the data in the ViewModel and updates the views with the new data, to
-     * restart the game.
-     */
+    // Untuk mendeklarasikan function restartGame
+    // Inisialisasi ulang data di ViewModel dan perbarui tampilan dengan data baru, untuk mulai ulang permainan.
     private fun restartGame() {
         viewModel.reinitializeData()
         setErrorTextField(false)
         updateNextWordOnScreen()
     }
 
-    /*
-     * Exits the game.
-     */
+
+    // Untuk mendeklarasikan function exitGame()
+    // Untuk keluar dari permainan
     private fun exitGame() {
         activity?.finish()
     }
@@ -128,9 +121,8 @@ class GameFragment : Fragment() {
         Log.d("GameFragment", "GameFragment destroyed!")
     }
 
-    /*
-    * Sets and resets the text field error status.
-    */
+    // Untuk mendeklarasikan function setErrorTextField()
+    // Untuk mengatur dan mengatur ulang status kesalahan pada teks
     private fun setErrorTextField(error: Boolean) {
         if (error) {
             binding.textField.isErrorEnabled = true
@@ -141,9 +133,8 @@ class GameFragment : Fragment() {
         }
     }
 
-    /*
-     * Displays the next scrambled word on screen.
-     */
+    // Untuk mendeklarasikan function updateNextWordOnScreen()
+    // Untuk menampilkan kata acak selanjutnya
     private fun updateNextWordOnScreen() {
         binding.textViewUnscrambledWord.text = viewModel.currentScrambledWord
     }
